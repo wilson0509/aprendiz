@@ -1,111 +1,175 @@
 import 'package:flutter/material.dart';
 
-class TareasDirigidasScreen extends StatefulWidget {
+class TareasDirigidasScreen extends StatelessWidget {
   const TareasDirigidasScreen({Key? key}) : super(key: key);
-
-  @override
-  _TareasDirigidasScreenState createState() => _TareasDirigidasScreenState();
-}
-
-class _TareasDirigidasScreenState extends State<TareasDirigidasScreen> {
-  final List<Map<String, dynamic>> _tareas = [
-    {
-      'titulo': 'Informe Matemáticas',
-      'descripcion': 'Preparar informe trimestral',
-      'fecha': '20 Mar 2025',
-      'completada': false
-    },
-    {
-      'titulo': 'Proyecto de Ciencias',
-      'descripcion': 'Desarrollar proyecto experimental',
-      'fecha': '25 Mar 2025',
-      'completada': false
-    },
-    {
-      'titulo': 'Ensayo de Historia',
-      'descripcion': 'Análisis de período histórico',
-      'fecha': '15 Mar 2025',
-      'completada': true
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tareas Dirigidas'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _mostrarDialogoNuevaTarea,
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: _tareas.length,
-        itemBuilder: (context, index) {
-          return CheckboxListTile(
-            title: Text(_tareas[index]['titulo']),
-            subtitle: Text(_tareas[index]['descripcion']),
-            secondary: Text(_tareas[index]['fecha']),
-            value: _tareas[index]['completada'],
-            onChanged: (bool? valor) {
-              setState(() {
-                _tareas[index]['completada'] = valor;
-              });
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  void _mostrarDialogoNuevaTarea() {
-    final tituloController = TextEditingController();
-    final descripcionController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Nueva Tarea'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
           children: [
-            TextField(
-              controller: tituloController,
-              decoration: const InputDecoration(
-                labelText: 'Título de la Tarea',
+            // Top profile section
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      'https://via.placeholder.com/150',
+                    ),
+                    radius: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Camilo Andrés Hernández Navarro',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Habitación N°10',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            TextField(
-              controller: descripcionController,
-              decoration: const InputDecoration(
-                labelText: 'Descripción',
+
+            // Tareas Dirigidas Pendientes list
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildTaskTile('Tarea 1', true),
+                  _buildTaskTile('Tarea 2', false),
+                  _buildTaskTile('Tarea 3', false),
+                  _buildTaskTile('Tarea 4', false),
+                  _buildTaskTile('Tarea 5', false),
+                  _buildTaskTile('Tarea 6', false),
+                  _buildTaskTile('Tarea 7', false),
+                  _buildTaskTile('Tarea 8', false),
+                ],
               ),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+      ),
+      // Bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '',
           ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _tareas.add({
-                  'titulo': tituloController.text,
-                  'descripcion': descripcionController.text,
-                  'fecha': DateTime.now().toString().split(' ')[0],
-                  'completada': false
-                });
-              });
-              Navigator.pop(context);
-            },
-            child: const Text('Guardar'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: '',
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTaskTile(String title, bool isExpanded) {
+    return ExpansionTile(
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+      ),
+      trailing: isExpanded 
+        ? const Icon(Icons.remove_circle_outline, color: Colors.green)
+        : const Icon(Icons.add, color: Colors.green),
+      children: isExpanded 
+        ? [
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Barrer la zona del Casino y sus alrededores. Para completar esta tarea, tiene un promedio de 4 Horas. Para comenzar esta tarea, las herramientas debe solicitarlas en Administración.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fecha Inicio',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('01/08/2024'),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fecha Fin',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('07/08/2024'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Evidencias',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.close, color: Colors.red),
+                          SizedBox(width: 8),
+                          Icon(Icons.check, color: Colors.green),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ]
+        : [],
     );
   }
 }
