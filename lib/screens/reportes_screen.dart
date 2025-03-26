@@ -159,7 +159,7 @@ class ReportesScreen extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.green,
               fontWeight: FontWeight.bold,
             ),

@@ -1,9 +1,9 @@
 import 'package:admin_app/screens/tareas_dirigida_screen.dart';
 import 'package:flutter/material.dart';
-import 'reportes_screen.dart';
-import 'manual_convivencia_screen.dart';
-import 'generar_permisos_screen.dart';
-import 'casino_screen.dart';
+import 'package:admin_app/screens/reportes_screen.dart';
+import 'package:admin_app/screens/manual_convivencia_screen.dart';
+import 'package:admin_app/screens/generar_permisos_screen.dart';
+import 'package:admin_app/screens/casino_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
