@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Barra de navegación inferior
+            // Barra de navegación inferior con estilo específico de la imagen
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -126,26 +126,25 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: BottomNavigationBar(
-                backgroundColor: Colors.white,
-                selectedItemColor: Colors.green,
-                unselectedItemColor: Colors.grey,
-                showUnselectedLabels: true,
-                type: BottomNavigationBarType.fixed,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    label: 'Inicio',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    label: 'Perfil',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings_outlined),
-                    label: 'Configuración',
-                  ),
-                ],
+              child: BottomAppBar(
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.home_outlined, color: Colors.green),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.person_outline, color: Colors.grey),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.settings_outlined, color: Colors.grey),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
